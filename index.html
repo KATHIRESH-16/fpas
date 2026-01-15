@@ -3,30 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>FPAS</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
-<div id="loginBox">
-  <h2>Faculty Login</h2>
-  <input id="fid" placeholder="Faculty ID">
+<div class="card" id="loginBox">
+  <h2>FPAS Login</h2>
+
+  <select id="role">
+    <option value="faculty">Faculty</option>
+    <option value="admin">Admin</option>
+  </select>
+
+  <input id="fid" placeholder="ID">
   <input id="pwd" type="password" placeholder="Password">
   <button onclick="login()">Login</button>
 </div>
 
 <div id="dashboard" class="hidden">
-  <h2>Welcome <span id="fname"></span></h2>
-  <button onclick="logout()">Logout</button>
+  <div class="top">
+    <h2>Welcome <span id="userName"></span></h2>
+    <button onclick="toggleTheme()">🌙</button>
+    <button onclick="logout()">Logout</button>
+  </div>
 
-  <h3>Create Period</h3>
-  <input id="subject" placeholder="Subject">
-  <input id="time" placeholder="Time (10:00-11:00)">
-  <button onclick="addPeriod()">Add Period</button>
+  <div id="adminPanel" class="hidden">
+    <h3>Admin Panel</h3>
+    <p>Admin can view system usage (demo)</p>
+  </div>
 
-  <h3>My Periods</h3>
-  <div id="periodList"></div>
+  <div id="facultyPanel">
+    <h3>Create Period</h3>
+    <input id="subject" placeholder="Subject">
+    <input id="time" placeholder="HH:MM">
+    <button onclick="addPeriod()">Add</button>
+
+    <h3>My Periods</h3>
+    <div id="periodList"></div>
+  </div>
 </div>
 
-<script src="app.js"></script>
+<script src="assets/app.js"></script>
 </body>
 </html>
