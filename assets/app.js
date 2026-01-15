@@ -1,22 +1,23 @@
-// Dummy faculty database
-const facultyDB = [
-  { id: "F001", name: "Kathiresh", password: "1234" },
-  { id: "F002", name: "Arun", password: "1234" }
+"use strict";
+
+// USERS
+const users = [
+  { id: "A001", name: "Admin", pass: "admin", role: "admin" },
+  { id: "F001", name: "Kathiresh", pass: "1234", role: "faculty" },
+  { id: "F002", name: "Arun", pass: "1234", role: "faculty" }
 ];
 
 // LOGIN
 function login() {
-  const id = document.getElementById("fid").value;
-  const password = document.getElementById("pwd").value;
+  const id = fid.value;
+  const pwdVal = pwd.value;
+  const roleVal = role.value;
 
-  const user = facultyDB.find(
-    f => f.id === id && f.password === password
+  const user = users.find(
+    u => u.id === id && u.pass === pwdVal && u.role === roleVal
   );
 
-  if (!user) {
-    alert("Invalid Faculty ID or Password");
-    return;
-  }
+  if (!user) return alert("Invalid login");
 
   localStorage.setItem("user", JSON.stringify(user));
   showDashboard();
@@ -24,66 +25,91 @@ function login() {
 
 // LOGOUT
 function logout() {
-  localStorage.removeItem("user");
+  localStorage.clear();
   location.reload();
 }
 
-// SHOW DASHBOARD
+// DASHBOARD
 function showDashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user) return;
 
   loginBox.classList.add("hidden");
   dashboard.classList.remove("hidden");
-  fname.innerText = user.name;
+  userName.innerText = user.name;
 
-  loadPeriods();
+  if (user.role === "admin") {
+    adminPanel.classList.remove("hidden");
+    facultyPanel.classList.add("hidden");
+  } else {
+    facultyPanel.classList.remove("hidden");
+    adminPanel.classList.add("hidden");
+    loadPeriods();
+  }
 }
 
-// ADD PERIOD (FACULTY-PRIVATE)
+// PERIOD CRUD
 function addPeriod() {
   const user = JSON.parse(localStorage.getItem("user"));
   const periods = JSON.parse(localStorage.getItem("periods") || "[]");
 
   periods.push({
-    facultyId: user.id,
+    id: Date.now(),
+    faculty: user.id,
     subject: subject.value,
     time: time.value
   });
 
   localStorage.setItem("periods", JSON.stringify(periods));
   loadPeriods();
-  scheduleAlert(subject.value);
 }
 
-// LOAD ONLY LOGGED-IN FACULTY PERIODS
+function deletePeriod(id) {
+  let periods = JSON.parse(localStorage.getItem("periods"));
+  periods = periods.filter(p => p.id !== id);
+  localStorage.setItem("periods", JSON.stringify(periods));
+  loadPeriods();
+}
+
 function loadPeriods() {
   const user = JSON.parse(localStorage.getItem("user"));
   const periods = JSON.parse(localStorage.getItem("periods") || "[]");
 
   periodList.innerHTML = "";
   periods
-    .filter(p => p.facultyId === user.id)
+    .filter(p => p.faculty === user.id)
     .forEach(p => {
       const div = document.createElement("div");
       div.className = "period";
-      div.innerHTML = `<b>${p.subject}</b><br>${p.time}`;
+      div.innerHTML = `
+        <b>${p.subject}</b> – ${p.time}
+        <button onclick="deletePeriod(${p.id})">❌</button>
+      `;
       periodList.appendChild(div);
     });
 }
 
-// NOTIFICATION
-function scheduleAlert(subject) {
-  Notification.requestPermission().then(p => {
-    if (p === "granted") {
-      setTimeout(() => {
-        new Notification("FPAS Alert", {
-          body: `Upcoming class: ${subject}`
-        });
-      }, 5000);
+// REAL-TIME ALERT (DEMO)
+setInterval(() => {
+  const now = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  const periods = JSON.parse(localStorage.getItem("periods") || "[]");
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) return;
+
+  periods.forEach(p => {
+    if (p.faculty === user.id && p.time === now) {
+      if (Notification.permission === "granted") {
+        new Notification("FPAS Alert", { body: p.subject + " is starting now" });
+      }
     }
   });
+}, 60000);
+
+// THEME
+function toggleTheme() {
+  document.body.classList.toggle("light");
 }
 
 // AUTO LOGIN
+Notification.requestPermission();
 showDashboard();
