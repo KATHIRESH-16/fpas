@@ -1,8 +1,8 @@
 :root {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --text: #fff;
-  --accent: #22c55e;
+  --bg:#0f172a;
+  --card:#1e293b;
+  --text:#fff;
+  --accent:#22c55e;
 }
 
 body {
@@ -10,40 +10,39 @@ body {
   background: var(--bg); color: var(--text);
 }
 
+/* Pages */
+.page, .hidden { display:none; }
 .page { display:flex; justify-content:center; align-items:center; height:100vh; }
-.hidden { display:none; }
-
-/* Login card */
-.login-card { background: var(--card); padding:30px; border-radius:12px; width:350px; text-align:center; }
+.login-card { background:var(--card); padding:30px; border-radius:12px; width:350px; text-align:center; }
 .login-card input, .login-card select, .login-card button { width:100%; padding:10px; margin:8px 0; }
 .login-card button { background: var(--accent); border:none; cursor:pointer; font-weight:600; }
 
-/* Dashboard layout */
-.main { flex:1; padding:20px; margin-left:220px; transition: all 0.3s; }
-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-
-.sidebar { width:200px; background: var(--card); padding:20px; height:100vh; position:fixed; }
+/* Dashboard Layout */
+.sidebar { position:fixed; width:220px; height:100vh; background:var(--card); padding:20px; }
 .sidebar ul { list-style:none; padding:0; }
 .sidebar ul li { padding:10px; margin:10px 0; cursor:pointer; border-radius:8px; transition:0.3s; }
 .sidebar ul li:hover { background: var(--accent); }
 
+.main { margin-left:220px; padding:20px; transition:all 0.3s; min-height:100vh; }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
 .section { display:block; transition:0.3s; }
 .cards { display:flex; flex-wrap:wrap; gap:10px; }
-.cards .period-card {
-  background: var(--card); padding:15px; border-radius:10px; width:220px;
-  display:flex; justify-content:space-between; align-items:center; transition:0.3s;
-}
-.cards .period-card:hover { transform: scale(1.03); }
-.cards .period-card span { display:flex; flex-direction:column; }
-.cards .period-card button { background:red; border:none; color:white; cursor:pointer; margin-left:10px; }
+.period-card { background:var(--card); padding:15px; border-radius:10px; width:220px; display:flex; justify-content:space-between; align-items:center; transition:0.3s; animation:fadeIn 0.5s;}
+.period-card:hover { transform:scale(1.03); }
+.period-card span { display:flex; flex-direction:column; }
+.period-card button { background:red; border:none; color:white; cursor:pointer; margin-left:10px; }
 
 /* Table style */
 table { width:100%; border-collapse:collapse; margin-top:15px; }
 table, th, td { border:1px solid var(--text); }
 th, td { padding:10px; text-align:left; }
 
-/* Calendar grid */
-.calendar-grid { display:grid; grid-template-columns: repeat(7,1fr); gap:10px; }
+/* Weekly Calendar */
+.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; margin-top:10px; }
+.calendar-grid div { background:var(--card); padding:15px; border-radius:8px; transition:0.3s; animation:fadeIn 0.5s; }
 
 /* Dark/Light toggle */
-body.light { --bg:#f8fafc; --card:#fff; --text:#000; --accent:#22c55e; color:var(--text);}
+body.light { --bg:#f8fafc; --card:#fff; --text:#000; --accent:#22c55e; }
+
+/* Animations */
+@keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
