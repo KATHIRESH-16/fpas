@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>FPAS – Faculty Period Alerting System</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <title>FPAS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>FPAS Dashboard</h1>
 
-    <button onclick="enableNotifications()">Enable Notifications</button>
+<div id="loginBox">
+  <h2>Faculty Login</h2>
+  <input id="fid" placeholder="Faculty ID">
+  <input id="pwd" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+</div>
 
-    <h2>My Periods</h2>
-    <div id="periods"></div>
-  </div>
+<div id="dashboard" class="hidden">
+  <h2>Welcome <span id="fname"></span></h2>
+  <button onclick="logout()">Logout</button>
 
-  <script src="assets/app.js"></script>
+  <h3>Create Period</h3>
+  <input id="subject" placeholder="Subject">
+  <input id="time" placeholder="Time (10:00-11:00)">
+  <button onclick="addPeriod()">Add Period</button>
+
+  <h3>My Periods</h3>
+  <div id="periodList"></div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
