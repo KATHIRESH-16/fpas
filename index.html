@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FPAS – Faculty Period Alerting System</title>
+  <title>FPAS v5 – Faculty Period Alerting System</title>
   <link rel="stylesheet" href="assets/style.css">
   <link rel="manifest" href="manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- LOGIN PAGE -->
 <div id="loginPage" class="page">
   <div class="login-card">
     <h2>FPAS Login</h2>
@@ -21,7 +23,10 @@
   </div>
 </div>
 
+<!-- DASHBOARD PAGE -->
 <div id="dashboardPage" class="page hidden">
+
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>FPAS</h2>
     <ul>
@@ -32,6 +37,7 @@
     </ul>
   </aside>
 
+  <!-- MAIN CONTENT -->
   <main class="main">
     <header>
       <h2 id="userName"></h2>
@@ -41,23 +47,29 @@
       </div>
     </header>
 
+    <!-- Dashboard Overview -->
     <section id="dashboard" class="section">
       <h3>Today’s Overview</h3>
       <div id="todayPeriods" class="cards"></div>
     </section>
 
+    <!-- Faculty My Periods -->
     <section id="myPeriods" class="section hidden">
       <h3>My Periods</h3>
       <div id="periodList" class="cards"></div>
     </section>
 
+    <!-- Create Period -->
     <section id="createPeriod" class="section hidden">
       <h3>Create Period</h3>
       <input id="subject" placeholder="Subject">
-      <input id="time" placeholder="Time (HH:MM)">
+      <input id="startTime" placeholder="Start Time (HH:MM)">
+      <input id="endTime" placeholder="End Time (HH:MM)">
+      <input id="classroom" placeholder="Classroom">
       <button onclick="addPeriod()">Add Period</button>
     </section>
 
+    <!-- Admin Panel -->
     <section id="adminPanel" class="section hidden">
       <h3>Admin Panel</h3>
       <table id="adminTable">
