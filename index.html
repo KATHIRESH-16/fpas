@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FPAS v5 – Faculty Period Alerting System</title>
+  <title>FPAS v6 – Faculty Period Alerting System</title>
   <link rel="stylesheet" href="assets/style.css">
   <link rel="manifest" href="manifest.json">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -34,6 +34,7 @@
       <li onclick="showSection('myPeriods')">My Periods</li>
       <li onclick="showSection('createPeriod')">Create Period</li>
       <li id="adminMenu" class="hidden" onclick="showSection('adminPanel')">Admin Panel</li>
+      <li id="weeklyMenu" class="hidden" onclick="showSection('weeklyView')">Weekly Calendar</li>
     </ul>
   </aside>
 
@@ -66,12 +67,24 @@
       <input id="startTime" placeholder="Start Time (HH:MM)">
       <input id="endTime" placeholder="End Time (HH:MM)">
       <input id="classroom" placeholder="Classroom">
+      <select id="assignTo">
+        <option value="single">Assign to One Faculty</option>
+        <option value="all">Assign to All Faculty</option>
+      </select>
+      <input id="facultyId" placeholder="Faculty ID (if single)">
       <button onclick="addPeriod()">Add Period</button>
     </section>
 
     <!-- Admin Panel -->
     <section id="adminPanel" class="section hidden">
       <h3>Admin Panel</h3>
+      <div class="faculty-create">
+        <h4>Add Faculty</h4>
+        <input id="newFid" placeholder="Faculty ID">
+        <input id="newName" placeholder="Faculty Name">
+        <input id="newPass" placeholder="Password">
+        <button onclick="addFaculty()">Add Faculty</button>
+      </div>
       <table id="adminTable">
         <thead>
           <tr><th>Faculty ID</th><th>Name</th><th>Role</th><th>Action</th></tr>
@@ -79,6 +92,13 @@
         <tbody></tbody>
       </table>
     </section>
+
+    <!-- Weekly Calendar -->
+    <section id="weeklyView" class="section hidden">
+      <h3>Weekly Calendar</h3>
+      <div id="weeklyCalendar" class="calendar-grid"></div>
+    </section>
+
   </main>
 </div>
 
