@@ -1,12 +1,17 @@
-# FPAS – Faculty Period Alerting System
+# FPAS v6 – Faculty Period Alerting System
 
 ## Features
 - Admin & Faculty login
-- Faculty privacy
-- Create / delete periods
-- Real-time alerts
-- Dark mode UI
-- GitHub Pages hosted
+- Role-based privacy
+- Create/Edit/Delete periods (subject, start/end time, classroom)
+- Assign periods to single or all faculty
+- Dashboard overview with color-coded periods
+- Weekly calendar view
+- Real-time alerts for period start & end
+- Dark/Light mode toggle
+- Responsive and PWA-ready
+- Admin panel to manage faculty & periods
+- Future-ready: attendance, swaps, analytics
 
 ## Login
 Admin → A001 / admin  
