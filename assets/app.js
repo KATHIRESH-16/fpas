@@ -6,11 +6,17 @@ const facultyDB = [
 
 // LOGIN
 function login() {
-  const id = fid.value;
-  const pwd = pwd.value;
+  const id = document.getElementById("fid").value;
+  const password = document.getElementById("pwd").value;
 
-  const user = facultyDB.find(f => f.id === id && f.password === pwd);
-  if (!user) return alert("Invalid login");
+  const user = facultyDB.find(
+    f => f.id === id && f.password === password
+  );
+
+  if (!user) {
+    alert("Invalid Faculty ID or Password");
+    return;
+  }
 
   localStorage.setItem("user", JSON.stringify(user));
   showDashboard();
