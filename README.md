@@ -1,4 +1,4 @@
-# FPAS v6 – Faculty Period Alerting System
+# FPAS v6.1 – Faculty Period Alerting System
 
 ## Features
 - Admin & Faculty login
@@ -6,7 +6,7 @@
 - Create/Edit/Delete periods (subject, start/end time, classroom)
 - Assign periods to single or all faculty
 - Dashboard overview with color-coded periods
-- Weekly calendar view
+- Animated weekly calendar
 - Real-time alerts for period start & end
 - Dark/Light mode toggle
 - Responsive and PWA-ready
