@@ -5,53 +5,51 @@
   --accent: #22c55e;
 }
 
-.light {
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --text: #000;
-}
-
 body {
+  margin: 0; padding: 0;
+  font-family: 'Poppins', sans-serif;
   background: var(--bg);
   color: var(--text);
-  font-family: Arial;
-  margin: 0;
-  padding: 20px;
 }
 
-.card {
-  max-width: 400px;
-  margin: auto;
+.page { display: flex; justify-content: center; align-items: center; height: 100vh; }
+.hidden { display: none; }
+
+/* Login card */
+.login-card {
   background: var(--card);
-  padding: 20px;
-  border-radius: 8px;
+  padding: 30px;
+  border-radius: 12px;
+  width: 350px;
+  text-align: center;
 }
+.login-card input, .login-card select, .login-card button {
+  width: 100%; padding: 10px; margin: 8px 0;
+}
+.login-card button { background: var(--accent); border: none; cursor: pointer; font-weight: 600; }
 
-input, select, button {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-}
+/* Dashboard layout */
+.dashboard .main, .main { flex: 1; padding: 20px; display: flex; flex-direction: column; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 
-button {
-  background: var(--accent);
-  border: none;
-  cursor: pointer;
+.sidebar {
+  width: 200px; background: var(--card); padding: 20px; height: 100vh; position: fixed;
 }
+.sidebar ul { list-style: none; padding: 0; }
+.sidebar ul li { padding: 10px; margin: 10px 0; cursor: pointer; border-radius: 8px; }
+.sidebar ul li:hover { background: var(--accent); }
 
-.hidden {
-  display: none;
+.section { display: block; }
+.cards { display: flex; flex-wrap: wrap; gap: 10px; }
+.cards .period-card {
+  background: var(--card); padding: 15px; border-radius: 10px; width: 200px;
+  display: flex; justify-content: space-between; align-items: center;
 }
+.cards .period-card button { background: red; border: none; color: white; cursor: pointer; }
 
-.top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+table { width: 100%; border-collapse: collapse; }
+table, th, td { border: 1px solid var(--text); }
+th, td { padding: 10px; text-align: left; }
 
-.period {
-  background: var(--card);
-  margin: 10px 0;
-  padding: 10px;
-  border-left: 5px solid var(--accent);
-}
+/* Dark/Light toggle */
+body.light { --bg: #f8fafc; --card: #fff; --text: #000; --accent: #22c55e; color: var(--text);}
