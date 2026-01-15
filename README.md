@@ -1,17 +1,17 @@
 # FPAS – Faculty Period Alerting System
 
 ## Features
-- Faculty-only period view
+- Faculty login
+- Faculty privacy (no shared periods)
+- Create & manage periods
 - Web notifications
-- PWA support
-- Responsive UI
 - GitHub Pages hosted
 
 ## Advantages
 - Prevents missed classes
-- Works on desktop & mobile
-- No installation required
-- Easy to scale
+- Simple & secure
+- Works on all devices
+- Easy to extend
 
 ## Live Demo
 https://kathiresh-16.github.io/fpas/
