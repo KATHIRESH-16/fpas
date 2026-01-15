@@ -6,50 +6,44 @@
 }
 
 body {
-  margin: 0; padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  margin:0; padding:0; font-family:'Poppins',sans-serif;
+  background: var(--bg); color: var(--text);
 }
 
-.page { display: flex; justify-content: center; align-items: center; height: 100vh; }
-.hidden { display: none; }
+.page { display:flex; justify-content:center; align-items:center; height:100vh; }
+.hidden { display:none; }
 
 /* Login card */
-.login-card {
-  background: var(--card);
-  padding: 30px;
-  border-radius: 12px;
-  width: 350px;
-  text-align: center;
-}
-.login-card input, .login-card select, .login-card button {
-  width: 100%; padding: 10px; margin: 8px 0;
-}
-.login-card button { background: var(--accent); border: none; cursor: pointer; font-weight: 600; }
+.login-card { background: var(--card); padding:30px; border-radius:12px; width:350px; text-align:center; }
+.login-card input, .login-card select, .login-card button { width:100%; padding:10px; margin:8px 0; }
+.login-card button { background: var(--accent); border:none; cursor:pointer; font-weight:600; }
 
 /* Dashboard layout */
-.dashboard .main, .main { flex: 1; padding: 20px; display: flex; flex-direction: column; }
-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.main { flex:1; padding:20px; margin-left:220px; transition: all 0.3s; }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
 
-.sidebar {
-  width: 200px; background: var(--card); padding: 20px; height: 100vh; position: fixed;
-}
-.sidebar ul { list-style: none; padding: 0; }
-.sidebar ul li { padding: 10px; margin: 10px 0; cursor: pointer; border-radius: 8px; }
+.sidebar { width:200px; background: var(--card); padding:20px; height:100vh; position:fixed; }
+.sidebar ul { list-style:none; padding:0; }
+.sidebar ul li { padding:10px; margin:10px 0; cursor:pointer; border-radius:8px; transition:0.3s; }
 .sidebar ul li:hover { background: var(--accent); }
 
-.section { display: block; }
-.cards { display: flex; flex-wrap: wrap; gap: 10px; }
+.section { display:block; transition:0.3s; }
+.cards { display:flex; flex-wrap:wrap; gap:10px; }
 .cards .period-card {
-  background: var(--card); padding: 15px; border-radius: 10px; width: 200px;
-  display: flex; justify-content: space-between; align-items: center;
+  background: var(--card); padding:15px; border-radius:10px; width:220px;
+  display:flex; justify-content:space-between; align-items:center; transition:0.3s;
 }
-.cards .period-card button { background: red; border: none; color: white; cursor: pointer; }
+.cards .period-card:hover { transform: scale(1.03); }
+.cards .period-card span { display:flex; flex-direction:column; }
+.cards .period-card button { background:red; border:none; color:white; cursor:pointer; margin-left:10px; }
 
-table { width: 100%; border-collapse: collapse; }
-table, th, td { border: 1px solid var(--text); }
-th, td { padding: 10px; text-align: left; }
+/* Table style */
+table { width:100%; border-collapse:collapse; margin-top:15px; }
+table, th, td { border:1px solid var(--text); }
+th, td { padding:10px; text-align:left; }
+
+/* Calendar grid */
+.calendar-grid { display:grid; grid-template-columns: repeat(7,1fr); gap:10px; }
 
 /* Dark/Light toggle */
-body.light { --bg: #f8fafc; --card: #fff; --text: #000; --accent: #22c55e; color: var(--text);}
+body.light { --bg:#f8fafc; --card:#fff; --text:#000; --accent:#22c55e; color:var(--text);}
