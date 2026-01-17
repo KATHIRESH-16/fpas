@@ -1,94 +1,15 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background: #0f172a;
-  color: white;
-}
-
-.light {
-  background: #f8fafc;
-  color: black;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.login-card {
-  background: #020617;
-  padding: 30px;
-  border-radius: 12px;
-  animation: pop 0.5s;
-}
-
-.container {
-  display: flex;
-}
-
-.sidebar {
-  width: 220px;
-  background: #020617;
-  padding: 20px;
-  animation: slide 0.5s;
-}
-
-.sidebar a {
-  display: block;
-  margin: 15px 0;
-  cursor: pointer;
-}
-
-.main {
-  flex: 1;
-  padding: 30px;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 15px;
-}
-
-.card {
-  background: #020617;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.today {
-  background: #38bdf8;
-}
-
-@keyframes slide {
-  from {transform: translateX(-100px);}
-  to {transform: translateX(0);}
-}
-
-@keyframes pop {
-  from {transform: scale(0.8);}
-  to {transform: scale(1);}
-}
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.table th, .table td {
-  border: 1px solid #334155;
-  padding: 10px;
-  text-align: center;
-}
-
-.form input, .form select {
-  margin: 5px;
-  padding: 8px;
-}
-
-.today {
-  background: #38bdf8;
-  color: black;
-}
+body{margin:0;font-family:Segoe UI;background:radial-gradient(circle,#020617,#0f172a);color:white}
+.center{display:flex;justify-content:center;align-items:center;height:100vh}
+.glass{background:rgba(255,255,255,.08);backdrop-filter:blur(15px);border-radius:18px}
+.login-card{padding:30px;width:320px;animation:pop .6s}
+.pass-box{display:flex;align-items:center}
+.pass-box span{cursor:pointer;margin-left:10px}
+.container{display:flex;height:100vh}
+.sidebar{width:240px;padding:20px;animation:slide .6s}
+.sidebar a{display:block;margin:15px 0;cursor:pointer}
+.main{flex:1;padding:30px;overflow:auto}
+.timetable{width:100%;border-collapse:collapse}
+.timetable th,.timetable td{border:1px solid #334155;padding:10px;text-align:center}
+@keyframes slide{from{transform:translateX(-100px)}to{transform:none}}
+@keyframes pop{from{transform:scale(.8)}to{transform:scale(1)}}
+@media(max-width:768px){.sidebar{display:none}.container{flex-direction:column}}
