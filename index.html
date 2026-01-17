@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FPAS Login</title>
   <link rel="stylesheet" href="style.css">
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#38bdf8">
 </head>
 <body class="center">
 
@@ -32,8 +36,8 @@
 
 <script src="dashboard.js"></script>
 <script>
-/* LOGIN LOGIC */
-const users = JSON.parse(localStorage.getItem("users")) || {
+/* LOGIN LOGIC WITH DEFAULT USERS */
+let users = JSON.parse(localStorage.getItem("users")) || {
   A001:{role:"admin",pass:"admin123"},
   A002:{role:"admin",pass:"admin123"},
   A003:{role:"admin",pass:"admin123"},
@@ -45,7 +49,7 @@ const users = JSON.parse(localStorage.getItem("users")) || {
   F006:{role:"faculty",pass:"faculty123"},
   F007:{role:"faculty",pass:"faculty123"}
 };
-localStorage.setItem("users",JSON.stringify(users));
+localStorage.setItem("users", JSON.stringify(users));
 
 let a = Math.floor(Math.random()*10), b=Math.floor(Math.random()*10);
 document.getElementById("capText").innerText = `${a} + ${b} = ?`;
@@ -69,6 +73,13 @@ function login(){
     localStorage.setItem("role",role);
     location.href = "dashboard.html";
   } else alert("Invalid credentials");
+}
+
+/* ---------- SERVICE WORKER REGISTRATION ---------- */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(reg => console.log("Service Worker Registered", reg))
+    .catch(err => console.log("SW Registration Failed", err));
 }
 </script>
 </body>
