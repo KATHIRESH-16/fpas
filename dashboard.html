@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FPAS Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="sidebar" id="sidebar">
+    <h2>FPAS</h2>
+    <a onclick="loadDashboard()">Dashboard</a>
+    <a onclick="loadTimetable()">Timetable</a>
+    <a onclick="loadAdmin()">Admin Panel</a>
+    <a onclick="logout()">Logout</a>
+    <button onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <div class="main" id="main"></div>
+</div>
+
+<script src="dashboard.js"></script>
+</body>
+</html>
