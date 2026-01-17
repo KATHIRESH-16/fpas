@@ -23,10 +23,10 @@ function generateCaptcha() {
   op = operators[Math.floor(Math.random() * 3)];
 
   // Ensure subtraction is never negative
-  if (op === '-') {
-    if (a < b) [a, b] = [b, a];
+  if(op === '-') {
+    if(a < b) [a, b] = [b, a]; // swap to avoid negative
     captchaAnswer = a - b;
-  } else if (op === '+') {
+  } else if(op === '+') {
     captchaAnswer = a + b;
   } else { // multiplication
     captchaAnswer = a * b;
@@ -48,14 +48,14 @@ function login() {
   const role = document.getElementById("role").value;
   const cap = parseInt(document.getElementById("captcha").value);
 
-  if (cap !== captchaAnswer) {
+  if(cap !== captchaAnswer) {
     alert("Captcha incorrect");
     generateCaptcha(); // regenerate if wrong
     return;
   }
 
   const user = JSON.parse(localStorage.getItem("users"))[id];
-  if (user && user.pass === pass && user.role === role) {
+  if(user && user.pass === pass && user.role === role) {
     localStorage.setItem("user", id);
     localStorage.setItem("role", role);
     location.href = "dashboard.html";
@@ -69,7 +69,14 @@ function login() {
 window.addEventListener("DOMContentLoaded", () => {
   generateCaptcha(); // show captcha on page load
 
-  // Optional: attach togglePass to eye icon if needed
+  // Attach togglePass to eye icon
   const eye = document.querySelector(".pass-box span");
-  if (eye) eye.addEventListener("click", togglePass);
+  if(eye) eye.addEventListener("click", togglePass);
 });
+
+/* ---------- SERVICE WORKER ---------- */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(reg => console.log("Service Worker Registered", reg))
+    .catch(err => console.log("SW Registration Failed", err));
+}
