@@ -3,109 +3,68 @@ const user = localStorage.getItem("user");
 const main = document.getElementById("main");
 
 let periods = JSON.parse(localStorage.getItem("periods")) || [];
+let users = JSON.parse(localStorage.getItem("users"));
 
-loadDashboard();
+dashboard();
 
-/* ---------- DASHBOARD ---------- */
-function loadDashboard() {
-  const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
-
-  const todayPeriods = periods.filter(
-    p => p.faculty === user && p.day === today
-  );
-
-  main.innerHTML = `
-    <h1>Today’s Overview (${user})</h1>
-
-    <div class="cards">
-      <div class="card">Today<br><h2>${today}</h2></div>
-      <div class="card">Periods Today<br><h2>${todayPeriods.length}</h2></div>
-      <div class="card">Total Periods<br><h2>${periods.length}</h2></div>
-    </div>
-
-    <button onclick="loadTimetable()">📅 Manage Periods</button>
-  `;
+function dashboard(){
+  main.innerHTML=`<h1>Welcome ${user}</h1>`;
 }
 
-/* ---------- TIMETABLE ---------- */
-function loadTimetable() {
-  main.innerHTML = `
-    <h2>Weekly Timetable</h2>
-
-    <div class="form">
-      <input id="pname" placeholder="Period Name">
-      <input id="cname" placeholder="Class Name">
-      <select id="day">
-        <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
-        <option>Thursday</option><option>Friday</option>
-        <option>Saturday</option><option>Sunday</option>
-      </select>
-      <input type="time" id="stime">
-      <input type="number" id="rem" placeholder="Reminder (min)">
-      <button onclick="addPeriod()">Add Period</button>
-    </div>
-
-    <table class="table">
+function timetable(){
+  const data = role==="admin"?periods:periods.filter(p=>p.faculty===user);
+  main.innerHTML=`
+  <h2>Weekly Timetable</h2>
+  <table class="timetable">
+    <tr>
+      <th>Faculty</th><th>Day</th><th>Period</th><th>Class</th><th>Time</th><th>Reminder</th><th>✏️</th>
+    </tr>
+    ${data.map((p,i)=>`
       <tr>
-        <th>Day</th>
-        <th>Period</th>
-        <th>Class</th>
-        <th>Start</th>
-        <th>Reminder</th>
-        <th>Action</th>
-      </tr>
-      ${renderRows()}
-    </table>
-  `;
+        <td>${p.faculty}</td><td>${p.day}</td><td>${p.period}</td>
+        <td>${p.class}</td><td>${p.time}</td><td>${p.rem} min</td>
+        <td>${role==="admin"?`<button onclick="edit(${i})">✏️</button>`:"-"}</td>
+      </tr>`).join("")}
+  </table>`;
 }
 
-/* ---------- RENDER TABLE ---------- */
-function renderRows() {
-  return periods
-    .filter(p => role === "admin" || p.faculty === user)
-    .map((p, i) => `
-      <tr class="${isToday(p.day) ? "today" : ""}">
-        <td>${p.day}</td>
-        <td>${p.period}</td>
-        <td>${p.class}</td>
-        <td>${p.time}</td>
-        <td>${p.rem} min</td>
-        <td>
-          <button onclick="deletePeriod(${i})">❌</button>
-        </td>
-      </tr>
-    `).join("");
+function adminPanel(){
+  if(role!=="admin") return alert("Admin only");
+  main.innerHTML=`
+  <h2>Admin Timetable Creator</h2>
+  <select id="fac"><option>ALL</option>${Object.keys(users).filter(u=>u.startsWith("F")).map(f=>`<option>${f}</option>`)}</select>
+  <select id="day">${["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>`<option>${d}</option>`)}</select>
+  <input id="period" placeholder="Period">
+  <input id="class" placeholder="Class">
+  <input type="time" id="time">
+  <input id="rem" placeholder="Reminder">
+  <button onclick="add()">Add</button>`;
 }
 
-function isToday(day) {
-  return new Date().toLocaleDateString("en-US",{weekday:"long"}) === day;
+function add(){
+  const target = fac.value==="ALL"?Object.keys(users).filter(u=>u.startsWith("F")):[fac.value];
+  target.forEach(f=>{
+    periods.push({faculty:f,day:day.value,period:period.value,class:class.value,time:time.value,rem:rem.value});
+  });
+  localStorage.setItem("periods",JSON.stringify(periods));
+  timetable();
 }
 
-/* ---------- ADD PERIOD ---------- */
-function addPeriod() {
-  const period = {
-    faculty: role === "admin" ? "F001" : user,
-    period: pname.value,
-    class: cname.value,
-    day: day.value,
-    time: stime.value,
-    rem: rem.value
-  };
-
-  periods.push(period);
-  localStorage.setItem("periods", JSON.stringify(periods));
-  loadTimetable();
+function usersPanel(){
+  if(role!=="admin") return alert("Admin only");
+  main.innerHTML=`
+  <h2>User Creation</h2>
+  <input id="uid" placeholder="User ID">
+  <input id="upass" placeholder="Password">
+  <select id="urole"><option>faculty</option><option>admin</option></select>
+  <button onclick="createUser()">Create</button>`;
 }
 
-/* ---------- DELETE ---------- */
-function deletePeriod(i) {
-  periods.splice(i, 1);
-  localStorage.setItem("periods", JSON.stringify(periods));
-  loadTimetable();
+function createUser(){
+  users[uid.value]={role:urole.value,pass:upass.value};
+  localStorage.setItem("users",JSON.stringify(users));
+  alert("User created");
 }
 
-/* ---------- LOGOUT ---------- */
-function logout() {
-  localStorage.clear();
-  window.location.href = "index.html";
-}
+function exportPDF(){ window.print(); }
+function logout(){ localStorage.clear(); location.href="index.html"; }
