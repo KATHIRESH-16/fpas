@@ -29,6 +29,7 @@
   <div class="captcha">
     <span id="capText"></span>
     <input id="captcha" placeholder="Answer">
+    <button type="button" onclick="generateCaptcha()">🔄</button>
   </div>
 
   <button onclick="login()">Login</button>
@@ -36,7 +37,7 @@
 
 <script src="dashboard.js"></script>
 <script>
-/* LOGIN LOGIC WITH DEFAULT USERS */
+/* ---------- USERS ---------- */
 let users = JSON.parse(localStorage.getItem("users")) || {
   A001:{role:"admin",pass:"admin123"},
   A002:{role:"admin",pass:"admin123"},
@@ -51,31 +52,62 @@ let users = JSON.parse(localStorage.getItem("users")) || {
 };
 localStorage.setItem("users", JSON.stringify(users));
 
-let a = Math.floor(Math.random()*10), b=Math.floor(Math.random()*10);
-document.getElementById("capText").innerText = `${a} + ${b} = ?`;
+/* ---------- CAPTCHA ---------- */
+let a, b, op, captchaAnswer;
 
+function generateCaptcha(){
+  a = Math.floor(Math.random()*10) + 1; // 1-10
+  b = Math.floor(Math.random()*10) + 1; // 1-10
+  const operators = ['+', '-', '*'];
+  op = operators[Math.floor(Math.random()*3)];
+
+  // Adjust subtraction to avoid negative answers
+  if(op === '-') {
+    if(a < b){ [a, b] = [b, a]; } // swap so a >= b
+    captchaAnswer = a - b;
+  } else if(op === '+') {
+    captchaAnswer = a + b;
+  } else { // multiplication
+    captchaAnswer = a * b;
+  }
+
+  document.getElementById("capText").innerText = `${a} ${op} ${b} = ?`;
+}
+
+/* Generate captcha after DOM is ready */
+window.addEventListener("DOMContentLoaded", generateCaptcha);
+
+/* ---------- PASSWORD TOGGLE ---------- */
 function togglePass(){
   const p = document.getElementById("password");
   p.type = p.type==="password"?"text":"password";
 }
 
+/* ---------- LOGIN ---------- */
 function login(){
   const id = document.getElementById("userid").value;
   const pass = document.getElementById("password").value;
   const role = document.getElementById("role").value;
   const cap = parseInt(document.getElementById("captcha").value);
 
-  if(cap !== (a+b)) return alert("Captcha incorrect");
+  if(cap !== captchaAnswer) {
+    alert("Captcha incorrect");
+    generateCaptcha(); // regenerate if wrong
+    return;
+  }
 
   const user = JSON.parse(localStorage.getItem("users"))[id];
   if(user && user.pass === pass && user.role === role){
     localStorage.setItem("user",id);
     localStorage.setItem("role",role);
     location.href = "dashboard.html";
-  } else alert("Invalid credentials");
+  } else {
+    alert("Invalid credentials");
+    generateCaptcha(); // regenerate if login fails
+  }
 }
 
-/* ---------- SERVICE WORKER REGISTRATION ---------- */
+/* ---------- SERVICE WORKER ---------- */
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("service-worker.js")
     .then(reg => console.log("Service Worker Registered", reg))
