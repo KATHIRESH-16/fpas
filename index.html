@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FPAS Login</title>
   <link rel="stylesheet" href="style.css">
-  <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#38bdf8">
 </head>
@@ -19,25 +18,22 @@
     <option value="faculty">Faculty</option>
   </select>
 
-  <input id="userid" placeholder="User ID">
+  <input type="text" id="userid" placeholder="User ID" autocomplete="off">
   
   <div class="pass-box">
     <input id="password" type="password" placeholder="Password">
-    <span>👁</span>
+    <span id="toggleBtn" style="cursor:pointer">👁</span>
   </div>
 
   <div class="captcha">
     <span id="capText"></span>
-    <input id="captcha" placeholder="Answer">
+    <input type="number" id="captchaInput" placeholder="Ans">
     <button type="button" onclick="generateCaptcha()">🔄</button>
   </div>
 
-  <button onclick="login()">Login</button>
+  <button type="button" onclick="login()">Login</button>
 </div>
 
-<!-- Dashboard JS -->
-<script src="dashboard.js"></script>
-<!-- App JS: Captcha, login, togglePass -->
 <script src="app.js"></script>
 </body>
 </html>
