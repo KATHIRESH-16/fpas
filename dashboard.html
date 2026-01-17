@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>FPAS Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-  <div class="sidebar glass">
+<div id="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
     <h2>FPAS</h2>
-    <a onclick="dashboard()">Dashboard</a>
-    <a onclick="timetable()">Timetable</a>
-    <a onclick="adminPanel()">Admin Panel</a>
-    <a onclick="usersPanel()">User Creation</a>
-    <a onclick="exportPDF()">Export PDF</a>
-    <a onclick="logout()">Logout</a>
-  </div>
+    <button onclick="showDashboard()">Dashboard</button>
+    <button onclick="showTimetable()">Timetable</button>
+    <button onclick="showAdmin()">Admin Panel</button>
+    <button onclick="logout()">Logout</button>
+  </aside>
 
-  <div class="main" id="main"></div>
+  <!-- Main -->
+  <main class="main">
+    <div id="content"></div>
+  </main>
 </div>
 
 <script src="dashboard.js"></script>
