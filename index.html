@@ -13,13 +13,8 @@
 <div class="login-card glass">
   <h2>FPAS Login</h2>
 
-  <select id="role">
-    <option value="admin">Admin</option>
-    <option value="faculty">Faculty</option>
-  </select>
-
   <input type="text" id="userid" placeholder="User ID" autocomplete="off">
-  
+
   <div class="pass-box">
     <input id="password" type="password" placeholder="Password">
     <span id="toggleBtn" style="cursor:pointer">👁</span>
@@ -27,7 +22,7 @@
 
   <div class="captcha">
     <span id="capText"></span>
-    <input type="number" id="captchaInput" placeholder="Ans">
+    <input type="number" id="captchaInput" placeholder="Answer">
     <button type="button" onclick="generateCaptcha()">🔄</button>
   </div>
 
