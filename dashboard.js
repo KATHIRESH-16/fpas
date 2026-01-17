@@ -2,73 +2,109 @@ const role = localStorage.getItem("role");
 const user = localStorage.getItem("user");
 const main = document.getElementById("main");
 
+let periods = JSON.parse(localStorage.getItem("periods")) || [];
+
 loadDashboard();
 
+/* ---------- DASHBOARD ---------- */
 function loadDashboard() {
+  const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
+
+  const todayPeriods = periods.filter(
+    p => p.faculty === user && p.day === today
+  );
+
   main.innerHTML = `
     <h1>Today’s Overview (${user})</h1>
 
     <div class="cards">
-      <div class="card">Today Periods<br>2</div>
-      <div class="card">Next Class<br>10:30 AM</div>
-      <div class="card">Alerts Active<br>Yes</div>
+      <div class="card">Today<br><h2>${today}</h2></div>
+      <div class="card">Periods Today<br><h2>${todayPeriods.length}</h2></div>
+      <div class="card">Total Periods<br><h2>${periods.length}</h2></div>
     </div>
 
-    <canvas id="chart"></canvas>
+    <button onclick="loadTimetable()">📅 Manage Periods</button>
   `;
-
-  new Chart(chart, {
-    type: "bar",
-    data: {
-      labels: ["Mon","Tue","Wed","Thu","Fri"],
-      datasets: [{
-        label: "Periods",
-        data: [2,3,1,4,2],
-        backgroundColor: "#38bdf8"
-      }]
-    }
-  });
 }
 
+/* ---------- TIMETABLE ---------- */
 function loadTimetable() {
   main.innerHTML = `
     <h2>Weekly Timetable</h2>
+
+    <div class="form">
+      <input id="pname" placeholder="Period Name">
+      <input id="cname" placeholder="Class Name">
+      <select id="day">
+        <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+        <option>Thursday</option><option>Friday</option>
+        <option>Saturday</option><option>Sunday</option>
+      </select>
+      <input type="time" id="stime">
+      <input type="number" id="rem" placeholder="Reminder (min)">
+      <button onclick="addPeriod()">Add Period</button>
+    </div>
+
     <table class="table">
-      <tr><th class="today">Mon</th><th>Tue</th><th>Wed</th></tr>
-      <tr><td>Math</td><td>Free</td><td>Physics</td></tr>
+      <tr>
+        <th>Day</th>
+        <th>Period</th>
+        <th>Class</th>
+        <th>Start</th>
+        <th>Reminder</th>
+        <th>Action</th>
+      </tr>
+      ${renderRows()}
     </table>
-
-    <h3>Create Period Alert</h3>
-    <input type="time" id="ptime">
-    <input type="number" id="mins" placeholder="Reminder minutes">
-    <button onclick="setAlert()">Set Alert</button>
   `;
 }
 
-function setAlert() {
-  const mins = document.getElementById("mins").value;
-  alert(`Reminder set ${mins} minutes before class`);
+/* ---------- RENDER TABLE ---------- */
+function renderRows() {
+  return periods
+    .filter(p => role === "admin" || p.faculty === user)
+    .map((p, i) => `
+      <tr class="${isToday(p.day) ? "today" : ""}">
+        <td>${p.day}</td>
+        <td>${p.period}</td>
+        <td>${p.class}</td>
+        <td>${p.time}</td>
+        <td>${p.rem} min</td>
+        <td>
+          <button onclick="deletePeriod(${i})">❌</button>
+        </td>
+      </tr>
+    `).join("");
 }
 
-function loadAdmin() {
-  if (role !== "admin") {
-    main.innerHTML = "<h2>Faculty cannot access Admin Panel</h2>";
-    return;
-  }
-
-  main.innerHTML = `
-    <h2>Admin Panel</h2>
-    <input placeholder="Faculty ID">
-    <input placeholder="Subject">
-    <input type="time">
-    <button>Add Period</button>
-  `;
+function isToday(day) {
+  return new Date().toLocaleDateString("en-US",{weekday:"long"}) === day;
 }
 
-function toggleTheme() {
-  document.body.classList.toggle("light");
+/* ---------- ADD PERIOD ---------- */
+function addPeriod() {
+  const period = {
+    faculty: role === "admin" ? "F001" : user,
+    period: pname.value,
+    class: cname.value,
+    day: day.value,
+    time: stime.value,
+    rem: rem.value
+  };
+
+  periods.push(period);
+  localStorage.setItem("periods", JSON.stringify(periods));
+  loadTimetable();
 }
 
+/* ---------- DELETE ---------- */
+function deletePeriod(i) {
+  periods.splice(i, 1);
+  localStorage.setItem("periods", JSON.stringify(periods));
+  loadTimetable();
+}
+
+/* ---------- LOGOUT ---------- */
 function logout() {
   localStorage.clear();
   window.location.href = "index.html";
