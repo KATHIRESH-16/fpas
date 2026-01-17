@@ -71,3 +71,24 @@ body {
   from {transform: scale(0.8);}
   to {transform: scale(1);}
 }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  border: 1px solid #334155;
+  padding: 10px;
+  text-align: center;
+}
+
+.form input, .form select {
+  margin: 5px;
+  padding: 8px;
+}
+
+.today {
+  background: #38bdf8;
+  color: black;
+}
