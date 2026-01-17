@@ -6,23 +6,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <div id="app">
-  <!-- Sidebar -->
   <aside class="sidebar">
     <h2>FPAS</h2>
     <button onclick="showDashboard()">Dashboard</button>
     <button onclick="showTimetable()">Timetable</button>
-    <button onclick="showAdmin()">Admin Panel</button>
+    <button onclick="showAdminPanel()">Admin Panel</button>
+    <button onclick="showUserPanel()">User Management</button>
+    <button onclick="exportPDF()">Export PDF</button>
     <button onclick="logout()">Logout</button>
   </aside>
-
-  <!-- Main -->
   <main class="main">
     <div id="content"></div>
   </main>
 </div>
-
 <script src="dashboard.js"></script>
 </body>
 </html>
