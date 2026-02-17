@@ -1,21 +1,26 @@
-{
-  "name": "FPAS College Scheduler",
-  "short_name": "FPAS",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#020617",
-  "theme_color": "#38bdf8",
-  "description": "Faculty Period Alert System - Offline & Downloadable",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
+const CACHE_NAME = "fpas-cache-v2";
+
+const urlsToCache = [
+  "./",
+  "./index.html",
+  "./dashboard.html",
+  "./style.css",
+  "./app.js",
+  "./dashboard.js"
+];
+
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
+    })
+  );
+});
+
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
+});
