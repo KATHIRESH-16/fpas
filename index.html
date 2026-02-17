@@ -1,32 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FPAS Login</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#38bdf8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FPAS Login</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
 </head>
-<body class="center">
+<body class="login-body">
 
-<div class="login-card glass">
-  <h2>FPAS Login</h2>
+<div class="login-card">
+    <h2>FPAS Login</h2>
 
-  <input type="text" id="userid" placeholder="User ID" autocomplete="off">
+    <input type="text" id="userid" placeholder="User ID" autocomplete="off">
 
-  <div class="pass-box">
-    <input id="password" type="password" placeholder="Password">
-    <span id="toggleBtn" style="cursor:pointer">👁</span>
-  </div>
+    <div class="pass-box">
+        <input id="password" type="password" placeholder="Password">
+        <span onclick="togglePass()">👁</span>
+    </div>
 
-  <div class="captcha">
-    <span id="capText"></span>
-    <input type="number" id="captchaInput" placeholder="Answer">
-    <button type="button" onclick="generateCaptcha()">🔄</button>
-  </div>
-
-  <button type="button" onclick="login()">Login</button>
+    <button onclick="login()">Login</button>
 </div>
 
 <script src="app.js"></script>
