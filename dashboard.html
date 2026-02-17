@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FPAS Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#38bdf8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FPAS Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
 </head>
 <body>
+
 <div id="app">
-  <aside class="sidebar">
-    <h2>FPAS</h2>
-    <button onclick="showDashboard()">Dashboard</button>
-    <button onclick="showTimetable()">Timetable</button>
-    <button onclick="showAdminPanel()">Admin Panel</button>
-    <button onclick="showUserPanel()">User Management</button>
-    <button onclick="exportPDF()">Export PDF</button>
-    <button onclick="logout()">Logout</button>
-  </aside>
-  <main class="main">
-    <div id="content"></div>
-  </main>
+    <aside class="sidebar">
+        <h2>FPAS</h2>
+        <button onclick="showDashboard()">Dashboard</button>
+        <button onclick="showTimetable()">Timetable</button>
+        <button id="adminPanelBtn" onclick="showAdminPanel()">Admin Panel</button>
+        <button id="userPanelBtn" onclick="showUserPanel()">User Management</button>
+        <button onclick="toggleTheme()">Toggle Theme</button>
+        <button onclick="logout()">Logout</button>
+    </aside>
+
+    <main class="main">
+        <div id="content"></div>
+    </main>
 </div>
 
 <script src="dashboard.js"></script>
 </body>
 </html>
+
